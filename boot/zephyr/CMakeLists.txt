@@ -157,6 +157,32 @@ elseif(CONFIG_BOOT_FIRMWARE_LOADER)
     ${BOOT_DIR}/zephyr/firmware_loader.c
     )
   zephyr_library_include_directories(${BOOT_DIR}/bootutil/src)
+elseif(CONFIG_MCUBOOT_MANIFEST_UPDATES)
+  zephyr_library_sources(
+    ${BOOT_DIR}/bootutil/src/loader_manifest_xip_ram.c
+    ${BOOT_DIR}/bootutil/src/swap_misc.c
+    ${BOOT_DIR}/bootutil/src/caps.c
+    )
+
+  if(CONFIG_BOOT_SWAP_USING_MOVE)
+    zephyr_library_sources(
+      ${BOOT_DIR}/bootutil/src/swap_move.c
+      )
+  elseif(CONFIG_BOOT_SWAP_USING_OFFSET)
+    zephyr_library_sources(
+      ${BOOT_DIR}/bootutil/src/swap_offset.c
+      )
+  else()
+    zephyr_library_sources(
+      ${BOOT_DIR}/bootutil/src/swap_scratch.c
+      )
+
+    if(CONFIG_BOOT_RAM_LOAD)
+      zephyr_library_sources(
+        ${BOOT_DIR}/bootutil/src/ram_load.c
+        )
+    endif()
+  endif()
 else()
   zephyr_library_sources(
     ${BOOT_DIR}/bootutil/src/loader.c

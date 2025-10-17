@@ -160,6 +160,7 @@ elseif(CONFIG_BOOT_FIRMWARE_LOADER)
 elseif(CONFIG_MCUBOOT_MANIFEST_UPDATES)
   zephyr_library_sources(
     ${BOOT_DIR}/bootutil/src/loader_manifest_xip_ram.c
+    ${BOOT_DIR}/bootutil/src/loader_manifest_swap.c
     ${BOOT_DIR}/bootutil/src/swap_misc.c
     ${BOOT_DIR}/bootutil/src/caps.c
     )
